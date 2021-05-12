@@ -30,7 +30,7 @@ const App = () => {
   const Header = (props) => {
       return (
       <div>
-        <h1> {course} </h1>
+        <h1> {props.course} </h1>
         </div>
       )
   }
@@ -45,7 +45,7 @@ const App = () => {
     )
   }
 
-  const Content = (props) => {
+  const Content = () => {
       return (
          <div>
             <Part part={part1} exercise={exercises1}/>
