@@ -1,0 +1,62 @@
+import React from 'react'
+
+const App = () => {
+  const course = {
+    name: 'Half Stack application development',
+    parts: [
+      {
+        name: 'Fundamentals of React',
+        exercises: 10
+      },
+      {
+        name: 'Using props to pass data',
+        exercises: 7
+      },
+      {
+        name: 'State of a component',
+        exercises: 14
+      }
+    ]
+  }
+
+  const Header = (props) => {
+    const {kurssi} = props
+    return (
+      <div>
+        <h1>{kurssi.name}</h1>
+      </div>
+    )
+  }
+
+  const Total = (props) => {
+    const {exe} = props
+    return (
+      <div>
+        <p>
+            {exe.parts[0].exercises + exe.parts[1].exercises + exe.parts[2].exercises}
+        </p>
+      </div>
+    )
+  }
+
+  const Content = (props) => {
+    const {lista} = props
+    return (
+      <div>
+        <p>{lista.parts[0].name} {lista.parts[0].exercises}</p>
+        <p>{lista.parts[1].name} {lista.parts[1].exercises}</p>
+        <p>{lista.parts[2].name} {lista.parts[2].exercises}</p>
+      </div>
+    )
+  }
+
+  return (
+    <div>
+      <Header kurssi={course} />
+      <Total exe={course} />
+      <Content lista={course} />
+    </div>
+  )
+}
+
+export default App;
