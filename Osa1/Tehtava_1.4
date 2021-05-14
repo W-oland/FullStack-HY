@@ -1,3 +1,5 @@
+import React from 'react'
+
 const App = () => {
   const course = 'Half Stack application development'
   const parts = [
@@ -15,28 +17,43 @@ const App = () => {
     }
   ]
 
+  const Header = (props) => {
+    return (
+      <div>
+        <h1>{props.kurssi}</h1>
+      </div>
+    )
+  }
+
+  const Total = (props) => {
+    const {exe} = props
+    return (
+      <div>
+        <p>
+            {exe[0].exercises + exe[1].exercises + exe[2].exercises}
+        </p>
+      </div>
+    )
+  }
+
+  const Content = (props) => {
+    const {lista} = props
+    return (
+      <div>
+        <p>{lista[0].name} {lista[0].exercises}</p>
+        <p>{lista[1].name} {lista[1].exercises}</p>
+        <p>{lista[2].name} {lista[2].exercises}</p>
+      </div>
+    )
+  }
+
   return (
     <div>
-      <Header course={...} />
-      <Content parts={parts} />
-      <Total parts={parts} />
+      <Header kurssi={course} />
+      <Total exe={parts} />
+      <Content lista={parts} />
     </div>
   )
 }
 
-	const Header = (props) => {
-		return (
-		<div>
-			<h1>{props.otsikko}</h1>
-		</div>
-		)
-	}
-	
-	const Total = (props) => {
-		const harjoitukset = props.harkat
-		return (
-			<div>
-				<p> Number of exercises {harjoitukset[0].exercises + harjoitukset[1].exercises + harjoitukset[2].exercises} </p>
-			</div>
-		)
-	}
+export default App;
