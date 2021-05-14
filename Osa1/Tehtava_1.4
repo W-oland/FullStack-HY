@@ -24,36 +24,19 @@ const App = () => {
   )
 }
 
-const Header = (props) => {
-      return (
-      <div>
-        <h1> {props.course} </h1>
-        </div>
-      )
-  }
-  
-  const Content = (props) => {
-      return (
-      <div>
-        <Part osa={parts[0].name} harjoitukset={parts[0].exercises} />
-        <Part osa={parts[1].name} harjoitukset={parts[1].exercises} />
-        <Part osa={parts[2].name} harjoitukset={parts[2].exercises} />
-        </div>
-      )
-  }
-  
-  const Part = (props) => {
-      return (
-      <div>
-        <p> {props.osa} {props.harjoitukset} </p>
-        </div>
-      )
-  }
-  
-  const Total = (props) => {
-      return (
-      <div>
-        <p> Number of exercises {} </p>
-        </div>
-      )
-  }
+	const Header = (props) => {
+		return (
+		<div>
+			<h1>{props.otsikko}</h1>
+		</div>
+		)
+	}
+	
+	const Total = (props) => {
+		const harjoitukset = props.harkat
+		return (
+			<div>
+				<p> Number of exercises {harjoitukset[0].exercises + harjoitukset[1].exercises + harjoitukset[2].exercises} </p>
+			</div>
+		)
+	}
