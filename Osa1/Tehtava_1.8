@@ -11,13 +11,11 @@ const App = () => {
     console.log("Handle good")
     setGood(good + 1)
     setAll(all + 1)
-    
   }
 
   const handleNeutral = () => {
     console.log("Handle neutral")
     setNeutral(neutral + 1)
-    
   }
 
   const handleBad = () => {
@@ -26,16 +24,14 @@ const App = () => {
       setAll(all - 1)
   }
 
-
   return (
     <div>
       <h1>Give feedback</h1>
-      <p>
-        <Button handleClick={handleGood} text={"Good"} />
-        <Button handleClick={handleNeutral} text={"neutral"} />
-        <Button handleClick={handleBad} text={"bad"} />
-        <Statistics good={good} neutral={neutral} bad={bad} all={all}/>
-      </p>
+      <Button handleClick={handleGood} text={"Good"} />
+      <Button handleClick={handleNeutral} text={"neutral"} />
+      <Button handleClick={handleBad} text={"bad"} />
+      <h1>Statistics</h1>
+      <Statistics good={good} neutral={neutral} bad={bad} all={all}/>
     </div>
   )
 }
@@ -43,8 +39,7 @@ const App = () => {
 const Statistics = ({good, neutral, bad, all}) => {
   return(
     <div>
-      <h1>Statistics</h1>
-      <p>good {good} </p>
+      <p>good {good}</p>
       <p>neutral {neutral}</p>
       <p>bad {bad}</p>
       <p>all {good + neutral + bad}</p>
