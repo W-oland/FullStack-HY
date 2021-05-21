@@ -36,13 +36,15 @@ const Course = (props) => {
 		<h1>{course.name}</h1>
 		<ul>
 			{course.map(part =>
-				<li> key={note.id}>
-					{note.name} {note.exercises}
+				<li> key={part.id}>
+					{part.name} {part.exercises}
 				</li>
 			)}
 		</ul>
 		<b> 
-			props.parts.map(total => total.exercises).reduce((previous, next) => previous + next)) 
+			{course.map(part => 
+				part.exercises).reduce((previous, next) => previous + next)) 
+			}
 		</b>
 	</div>
 	)
