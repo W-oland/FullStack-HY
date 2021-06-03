@@ -4,6 +4,7 @@ import axios from 'axios'
 const App = () => {
 	
 	const [ countries, setCountries ] = useState([])
+	const [ criteria, setCriteria ] = useState([])
 	
 	
 	useEffect(() => {
@@ -16,21 +17,36 @@ const App = () => {
 	}, [])
 	console.log('render', countries.length, 'countries')
 	
-	const filter (criteria) => {
-		const show = countries.filter(country => country.indexOf(criteria) != -1)
+	
+	const filterCountry = (event) => {
+		setCriteria(event.target.value)
+		const matches = countries.name.filter(c => c.includes(criteria))
 		return (
-		if (show.length > 10) {
-			console.log('too many matches')
-		} else if (show.length > 0 && show.length < 11) {
-			console.log(show)
-		} else if (show.length == 1) {
-			
-		}
+			if (matches.length > 10) {
+				'Too many matches,specify another filter'
+			} else if (mathes.lenght > 1 && matches.length < 11) {
+				<ul>
+				{matches.map(match =>
+					<li>
+					<h1>{match.name}</h1>
+					capital {match.capital}
+					population {match.population}
+					</li>}
+				</ul>
+			}
 		)
 	}
 	
-	return (
 	
+	return (
+	<div>
+		<form }>
+			<input>
+				value={criteria}
+				onChange={filterCountry}
+			</input>
+		</form>
+	</div>
 	)
 }
 
