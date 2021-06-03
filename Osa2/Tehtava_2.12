@@ -26,13 +26,12 @@ const App = () => {
 				'Too many matches,specify another filter'
 			} else if (mathes.lenght > 1 && matches.length < 11) {
 				<ul>
-				{matches.map(match =>
-					<li>
-					<h1>{match.name}</h1>
-					capital {match.capital}
-					population {match.population}
-					</li>}
+				{matches.map(match => <li>{match.name}</li>)}
 				</ul>
+			} else {
+				{match.name}
+				capital {match.capital}
+				population {match.population}
 			}
 		)
 	}
