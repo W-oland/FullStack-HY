@@ -1,6 +1,7 @@
 import React from 'react'
 
 const App = () => {
+  
   const course = {
     name: 'Half Stack application development',
     parts: [
@@ -20,43 +21,39 @@ const App = () => {
   }
 
   const Header = (props) => {
-    const {kurssi} = props
+    console.log(props)
     return (
       <div>
-        <h1>{kurssi.name}</h1>
+        <h1>{props.course.name}</h1>
+      </div>
+    )}
+
+  const Content = (props) => {
+    return (
+      <div>
+        <p>{props.course.parts[0].name} {props.course.parts[0].exercises}</p>
+        <p>{props.course.parts[1].name} {props.course.parts[1].exercises}</p>
+        <p>{props.course.parts[2].name} {props.course.parts[2].exercises}</p>
       </div>
     )
   }
 
   const Total = (props) => {
-    const {exe} = props
+    console.log(props)
     return (
       <div>
-        <p>
-            {exe.parts[0].exercises + exe.parts[1].exercises + exe.parts[2].exercises}
-        </p>
-      </div>
-    )
-  }
-
-  const Content = (props) => {
-    const {lista} = props
-    return (
-      <div>
-        <p>{lista.parts[0].name} {lista.parts[0].exercises}</p>
-        <p>{lista.parts[1].name} {lista.parts[1].exercises}</p>
-        <p>{lista.parts[2].name} {lista.parts[2].exercises}</p>
+        <p>{props.course.parts[0].exercises + props.course.parts[1].exercises + props.course.parts[2].exercises}</p>
       </div>
     )
   }
 
   return (
     <div>
-      <Header kurssi={course} />
-      <Total exe={course} />
-      <Content lista={course} />
+      <Header course={course} />
+      <Content course={course} />
+      <Total course={course} />
     </div>
   )
 }
 
-export default App;
+export default App
