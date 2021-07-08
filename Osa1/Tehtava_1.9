@@ -1,65 +1,52 @@
 import React, {useState} from 'react'
 
-const App = () => {
-  console.log("App constructor")
-  const[good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
-  const [all, setAll] = useState(0)
+const Statistics = (props) => {
+  const {good, neutral, bad} = props
+  console.log('statistics component')
 
-  const handleGood = () => {
-    console.log("Handle good")
-    setGood(good + 1)
-    setAll(all + 1)
-  }
-
-  const handleNeutral = () => {
-    console.log("Handle neutral")
-    setNeutral(neutral + 1)
-  }
-
-  const handleBad = () => {
-    console.log("Handle bad")
-      setBad(bad + 1)
-      setAll(all - 1)
+  if (good === 0 & neutral === 0 & bad === 0) {
+    return (
+      <div>
+        <p>No feedback given</p>
+      </div>
+    )
   }
 
   return (
     <div>
-      <h1>Give feedback</h1>
-      <Button handleClick={handleGood} text={"Good"} />
-      <Button handleClick={handleNeutral} text={"neutral"} />
-      <Button handleClick={handleBad} text={"bad"} />
-      <h1>Statistics</h1>
-      <Statistics good={good} neutral={neutral} bad={bad} all={all}/>
-    </div>
-  )
-}
-
-const Statistics = ({good, neutral, bad, all}) => {
-  if (all === 0) {
-    return (
-      <div>
-        No feedback given
+        <h1>Statistics</h1>
+        <p>good {good}</p>
+        <p>neutral {neutral}</p>
+        <p>bad {bad}</p>
+        <p>all {good + neutral + bad}</p>
+        <p>average {(good*1 + neutral*0 + bad*-1)/(good + neutral + bad)}</p>
+        <p>positive {good/(good + neutral + bad)} %</p>
       </div>
-    )
-  }
-  return(
+  )
+}
+
+const App = (props) => {
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad, setBad] = useState(0)
+
+  return (
     <div>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {good + neutral + bad}</p>
-      <p>average {good / (good + neutral + bad)}</p>
-      <p>positive {good/all}</p>
+      <h1>Give feedback</h1>
+      <button onClick={() => setGood(good +1)}>
+        good
+      </button>
+      <button onClick={() => setNeutral(neutral +1)}>
+        neutral
+      </button>
+      <button onClick={() => setBad(bad +1)}>
+        bad
+      </button>
+      <div>
+        <Statistics good={good} neutral={neutral} bad={bad}/>
+      </div>
     </div>
   )
 }
 
-const Button = ({handleClick, text}) => (
-  <button onClick={handleClick}>
-    {text}
-  </button>
-)
-
-export default App;
+export default App
