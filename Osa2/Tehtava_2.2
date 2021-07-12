@@ -1,51 +1,82 @@
+import React from 'react'
+
 const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    id: 1,
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10,
-        id: 1
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7,
-        id: 2
-      },
-      {
-        name: 'State of a component',
-        exercises: 14,
-        id: 3
-      }
-    ]
+    const course = {
+      name: 'Half Stack application development',
+      id: 1,
+      parts: [
+        {
+          name: 'Fundamentals of React',
+          exercises: 10,
+          id: 1
+        },
+        {
+          name: 'Using props to pass data',
+          exercises: 7,
+          id: 2
+        },
+        {
+          name: 'State of a component',
+          exercises: 14,
+          id: 3
+        }
+      ]
+    }
+  
+    return (
+      <div>
+        <Course kurssi={course} />
+      </div>
+    )
   }
 
-  return (
-    <div>
-      <Course course={course} />
-    </div>
-  )
-}
+  const Course = (props) => {
+      console.log('Course component', props)
+      return (
+          <div>
+              <Header course={props.kurssi} />
+              <Content course={props.kurssi} />
+              <Total kurssi={props.kurssi} />
+          </div>
+      )
+  }
 
-const Course = (props) => {
-	const {course} = props
-	const 
-	return (
-	<div>
-		<h1>{course.name}</h1>
-		<ul>
-			{course.map(part =>
-				<li> key={part.id}>
-					{part.name} {part.exercises}
-				</li>
-			)}
-		</ul>
-		<b> 
-			{course.map(part => 
-				part.exercises).reduce((previous, next) => previous + next)) 
-			}
-		</b>
-	</div>
-	)
-}
+  const Header = (props) => {
+      console.log('Header component', props)
+      return (
+          <h1>{props.course.name}</h1>
+      )
+  }
+
+  const Content = (props) => {
+      console.log('Content component', props)
+      return (
+          <ul>
+              {props.course.parts.map(part =>
+                <Part key={part.id} part={part} />
+                )}
+          </ul>
+      )
+  }
+
+  const Part = (props) => {
+      console.log('Part component', props)
+      return (
+          <li>{props.part.name} {props.part.exercises}</li>
+      )
+  }
+
+  const Total = (props) => {
+      console.log('Total component', props)
+      return (
+          <div>
+              <h3>
+                {'total of '} 
+                {props.kurssi.parts.reduce((accumulator, currentValue) => accumulator + currentValue.exercises, 0)}
+                {' exercises'}
+             </h3>
+          </div>
+      )
+  }
+
+export default App
