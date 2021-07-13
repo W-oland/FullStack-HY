@@ -1,85 +1,93 @@
 import React, { useState } from 'react'
 
 const App = () => {
-  const [ persons, setPersons] = useState([
+  const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456' },
     { name: 'Ada Lovelace', number: '39-44-5323523' },
     { name: 'Dan Abramov', number: '12-43-234345' },
     { name: 'Mary Poppendieck', number: '39-23-6423122' }
-  ]) 
-  const [ newName, setNewName ] = useState('')
-  const [ newNumber, setNewNumber ] = useState('')
-  const [ show, setNewShow ] = useState(true)
-  
-  const personsToShow = show
-	? persons
-	: persons.filter(person => person.name.match(/{newName}/i))
+  ])
 
-  const addName = (event) => {
-	  event.preventDefault()
-	  console.log('button 2 clicked', event.target)
-	  
-	  const nameObject = {
-		  name: newName
-		  number: newNumber
-	  }
-	  
-	  if (persons.includes(nameObject)) {
-		  window.alert(`${newName} is already added to phonebook`)
-	  } else {
-		  setPersons(persons.concat(nameObject))
-		  setNewName('')
-		  setNewNumber('')
-	  }
+  const [ newName, setNewName ] = useState('')
+  const [ newNumber, setNewNumber] = useState('')
+  // const [ search, setNewSearch] = useState('')
+  const [ filterPerson, setFilterPerson ] = useState('')
+
+  const personsFilter = filterPerson
+    ? persons.filter(person => person.name.toLowerCase().search(filterPerson.toLowerCase()) !== -1)
+    : persons
+
+  const addPerson = (event) => {
+    event.preventDefault()
+    console.log('Submitted: ', event.target)
+    const personObject = {
+      name: newName,
+      number: newNumber
+    }
+    if(persons.filter(e => e.name === newName).length > 0) {
+      window.alert(`${newName} is already added to phonebook`)
+    } else {
+      setPersons(persons.concat(personObject))
+      setNewName('') // This clears the "state"
+      setNewNumber('')
+      console.log(persons)
+    }
   }
+
+    const handleName = (event) => {
+      console.log('Changed name (state): ', event.target.value)
+      setNewName(event.target.value)
+    }
+
+    const handleNumber = (event) => {
+      console.log('Changed number (state): ', event.target.value)
+      setNewNumber(event.target.value)
+    }
+
+    const handleSearch = (event) => {
+      console.log('Changed search (state)', event.target.value)
+      // setNewSearch(event.target.value)
+      setFilterPerson(event.target.value)
+    }
   
-  const handleNameChange = (event) => {
-	  console.log(event.target.value)
-	  setNewName(event.target.value)
-  }
-  
-  const handleNumberChange = (event) => {
-	  console.log(event.target.value)
-	  setNewNumber(event.target.value)
-  }
-  
- 
-  
+
   return (
     <div>
       <h2>Phonebook</h2>
-	  <form> 
-		<div>
-			filter shown with <input value={newName} />
-		</div>
-	  </form>
-	  
-	  <h2> add a new </h2>
-      <form onSubmit={addName}>
+      <div>
+        filter shown with <input 
+        value={filterPerson}
+        onChange={handleSearch}
+        />
+      </div>
+
+      <h2>Add a new</h2>
+      <form onSubmit={addPerson}>
         <div>
           name: <input 
-		  value={newName}
-		  onChange={handleNameChange}
-		  />
+          value={newName}
+          onChange={handleName}
+          />
         </div>
-		<div>
-			number: <input
-			value = {newNumber}
-			onChange = {handleNumberChange}
-			/>
-		</div>
+        <div>
+          number: <input
+          value={newNumber}
+          onChange={handleNumber}
+          />
+        </div>
         <div>
           <button type="submit">add</button>
         </div>
       </form>
+
       <h2>Numbers</h2>
       <ul>
-		{personsToShow.map(person =>
-			<li key={person.name}>
-				{person.name} {person.number}
-			</li>
-		)}
-	  </ul>
+        {personsFilter.map(person =>
+          <li key={person.name}>
+            {person.name} {person.number}
+          </li>
+          )}
+      </ul>
     </div>
   )
 
