@@ -6,35 +6,37 @@ const App = () => {
   ]) 
   const [ newName, setNewName ] = useState('')
 
-  const addName = (event) => {
-	  event.preventDefault()
-	  console.log('button clicked', event.target)
-	  const nameObject = {
-		  name: newName
-	  }
-	  
-	  if (persons.includes(nameObject)) {
-		  window.alert(`${newName} is already added to phonebook`)
-	  } else {
-		  setPersons(persons.concat(nameObject))
-		  setNewName('')
-	  }
-  }
+  const addPerson = (event) => {
+    event.preventDefault()
+    console.log('Submitted: ', event.target)
+    const nameObject = {
+      name: newName
+    }
+
+    if(persons.filter(e => e.name === newName).length > 0) {
+      window.alert(`${newName} is already added to phonebook`)
+    } else {
+      setPersons(persons.concat(nameObject))
+      setNewName('') // This clears the "state"
+      console.log(persons)
+    }
   
-  const handleNameChange = (event) => {
-	  console.log(event.target.value)
-	  setNewName(event.target.value)
   }
-  
+
+  const handleInput = (event) => {
+    console.log('Changed: ', event.target.value)
+    setNewName(event.target.value)
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={addName}>
+      <form onSubmit={addPerson}>
         <div>
           name: <input 
-		  value={newName}
-		  onChange={handleNameChange}
-		  />
+          value={newName}
+          onChange={handleInput}
+          />
         </div>
         <div>
           <button type="submit">add</button>
@@ -42,12 +44,12 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <ul>
-		{persons.map(person =>
-			<li key={person.name}>
-				{person.name}
-			</li>
-		)}
-	  </ul>
+        {persons.map(person =>
+          <li key={person.name}>
+            {person.name}
+          </li>
+          )}
+      </ul>
     </div>
   )
 
