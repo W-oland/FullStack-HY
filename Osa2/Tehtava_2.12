@@ -19,8 +19,8 @@ const Country = ({maat, filtteri}) => {
     return (
       <ul>
         <h1>{lista[0].name}</h1>
-        {lista[0].capital}
-        {lista[0].population}
+        <tr>Capital <td>{lista[0].capital}</td></tr>
+        <tr>Population<td>{lista[0].population}</td></tr>
         <h2>languages</h2>
         {lista.map(maa =>
           maa.languages.map(language =>
@@ -29,7 +29,7 @@ const Country = ({maat, filtteri}) => {
             </li>
             )
           )}
-          {lista[0].flag}
+          <img src={lista[0].flag} alt='flag' width="325" height="175" />
       </ul>
     )
   } else {
