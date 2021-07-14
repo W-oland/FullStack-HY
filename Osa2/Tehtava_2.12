@@ -1,21 +1,36 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
-// Kesken!
+
 const Country = ({maat, filtteri}) => {
   console.log('Country component')
   const lista = maat.filter(maa => maa.name.search(filtteri) !==-1)
-  if (lista.length<=10 && lista.length > 0) {
+  if (lista.length<=10 && lista.length > 1) {
     return (
-      <li>
-        {lista.name}
-      </li>
+      <ul>
+        {lista.map(maa =>
+          <li key={maa.name}>
+            {maa.name}
+          </li>
+          )}
+      </ul>
     )
   } else if (lista.length === 1) {
     return (
-      <li>
-        {lista.name} {lista.capital}
-      </li>
+      <ul>
+        <h1>{lista[0].name}</h1>
+        {lista[0].capital}
+        {lista[0].population}
+        <h2>languages</h2>
+        {lista.map(maa =>
+          maa.languages.map(language =>
+            <li key={language.name}>
+              {language.name}
+            </li>
+            )
+          )}
+          {lista[0].flag}
+      </ul>
     )
   } else {
     return 'Too many countries'
