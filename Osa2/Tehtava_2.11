@@ -1,93 +1,97 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 const App = () => {
-  const [ persons, setPersons] = useState([]) 
+  const  [ persons, setPersons ] = useState([])
   const [ newName, setNewName ] = useState('')
-  const [ newNumber, setNewNumber ] = useState('')
-  const [ show, setNewShow ] = useState(true)
-  
-  const hook = () => {
-	  console.log('hook')
-	  axios
-	  .get('http://localhost:3001/persons')
-	  .then(response => {
-		  console.log('promise fulfilled')
-		  setPersons(response.data)
-	  })
-  }
-  
-  useEffect(hook, []) 
-  
-  const personsToShow = show
-	? persons
-	: persons.filter(person => person.name.match(/{newName}/i))
+  const [ newNumber, setNewNumber] = useState('')
+  const [ condition, setCondition] = useState('')
 
-  const addName = (event) => {
-	  event.preventDefault()
-	  console.log('button 2 clicked', event.target)
-	  
-	  const nameObject = {
-		  name: newName
-		  number: newNumber
-	  }
-	  
-	  if (persons.includes(nameObject)) {
-		  window.alert(`${newName} is already added to phonebook`)
-	  } else {
-		  setPersons(persons.concat(nameObject))
-		  setNewName('')
-		  setNewNumber('')
-	  }
+  useEffect(()=> {
+    console.log('effect')
+    axios
+      .get('http://localhost:3003/persons')
+      .then(response => {
+        console.log('promise fulfilled')
+        setPersons(response.data)
+      })
+  }, [])
+  console.log('render', persons.length, 'persons')
+
+  const personsToShow = condition
+  ? persons.filter(person => person.name.toLowerCase().search(condition.toLowerCase()) !== -1)
+  : persons
+
+  const addPerson = (event) => {
+    event.preventDefault()
+    console.log('Submitted: ', event.target)
+    const personObject = {
+      name: newName, 
+      number: newNumber
+    }
+    if(persons.filter(e => e.name === newName).length > 0) {
+      window.alert(`${newName} is already added to phonebook`)
+    } else {
+      setPersons(persons.concat(personObject))
+      setNewName('') // This clears the "state"
+      setNewNumber('')
+      console.log(persons)
+    }
   }
+
+    const handleName = (event) => {
+      console.log('Changed name (state): ', event.target.value)
+      setNewName(event.target.value)
+    }
+
+    const handleNumber = (event) => {
+      console.log('Changed number (state): ', event.target.value)
+      setNewNumber(event.target.value)
+    }
+
+    const handleSearch = (event) => {
+      console.log('Changed search (state)', event.target.value)
+      setCondition(event.target.value)
+    }
   
-  const handleNameChange = (event) => {
-	  console.log(event.target.value)
-	  setNewName(event.target.value)
-  }
-  
-  const handleNumberChange = (event) => {
-	  console.log(event.target.value)
-	  setNewNumber(event.target.value)
-  }
-  
- 
-  
+
   return (
     <div>
       <h2>Phonebook</h2>
-	  <form> 
-		<div>
-			filter shown with <input value={newName} />
-		</div>
-	  </form>
-	  
-	  <h2> add a new </h2>
-      <form onSubmit={addName}>
+      <div>
+        filter shown with <input 
+        value={condition}
+        onChange={handleSearch}
+        />
+      </div>
+
+      <h2>Add a new</h2>
+      <form onSubmit={addPerson}>
         <div>
           name: <input 
-		  value={newName}
-		  onChange={handleNameChange}
-		  />
+          value={newName}
+          onChange={handleName}
+          />
         </div>
-		<div>
-			number: <input
-			value = {newNumber}
-			onChange = {handleNumberChange}
-			/>
-		</div>
+        <div>
+          number: <input
+          value={newNumber}
+          onChange={handleNumber}
+          />
+        </div>
         <div>
           <button type="submit">add</button>
         </div>
       </form>
+
       <h2>Numbers</h2>
       <ul>
-		{personsToShow.map(person =>
-			<li key={person.name}>
-				{person.name} {person.number}
-			</li>
-		)}
-	  </ul>
+        {personsToShow.map(person =>
+          <li key={person.name}>
+            {person.name} {person.number}
+          </li>
+          )}
+      </ul>
     </div>
   )
 
