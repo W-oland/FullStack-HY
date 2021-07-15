@@ -12,10 +12,11 @@ const Notification = (props) => {
     color:'green',
     fontStyle:'italic',
     fontSize: 16,
-    backGround: 'lightgrey',
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10
+    borderStyle: "solid",
+    backgroundColor: 'lightgrey',
+    borderRadius: "5px",
+    padding: "10px",
+    marginBottom: "10px"
   }
 
   if (props.message === null) {
@@ -35,7 +36,7 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber] = useState('')
   const [ condition, setCondition] = useState('')
-  const [ errorMessage, setErrorMessage ] = useState('')
+  const [ errorMessage, setErrorMessage ] = useState(null)
   
   const handleDelete = (id, name) => {
     if (window.confirm(`Delete ${name}`))
