@@ -1,11 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import personService from './services/persons'
 
+const Button = (props) => (
+  <button onClick={props.deleteObject}>
+    {props.name}
+  </button>
+)
+
 const App = () => {
   const  [ persons, setPersons ] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber] = useState('')
   const [ condition, setCondition] = useState('')
+  
+  const handleDelete = (id, name) => {
+    if (window.confirm(`Delete ${name}`))
+    personService.deleteObject(id).then(returnedNote => {
+      setPersons(persons.filter(n => n.id !== id))
+    })
+  }
   
   useEffect(()=> {
     console.log('effect')
@@ -25,12 +38,10 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault()
     console.log('Submitted: ', event.target)
-    
     const personObject = {
       name: newName, 
       number: newNumber
     }
-
     if(persons.filter(e => e.name === newName).length > 0) {
       window.alert(`${newName} is already added to phonebook`)
     } else {
@@ -44,7 +55,6 @@ const App = () => {
           console.log(persons)
         })
       }
-
   }
 
     const handleName = (event) => {
@@ -61,22 +71,6 @@ const App = () => {
       console.log('Changed search (state)', event.target.value)
       setCondition(event.target.value)
     }
-
-    const handleDelete = (id, name) => {
-      if (window.confirm(`Delete ${name}?`)) {
-        personService
-          .deleteObject(id)
-          .then(() => {
-            personService
-              .getAll()
-              .then(contacts => {
-                const arr = contacts
-                setPersons(arr)
-              })
-          })
-      }
-    }
-  
 
   return (
     <div>
@@ -112,13 +106,7 @@ const App = () => {
         {personsToShow.map(person =>
           <li key={person.name}>
             {person.name} {person.number}
-            <button onClick={
-              () => handleDelete(
-                person.id, person.name
-              )
-            }>
-              Delete
-            </button>
+            <Button name='Delete' deleteObject={() => handleDelete(person.id, person.name)} />
           </li>
           )}
       </ul>
