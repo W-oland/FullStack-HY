@@ -43,6 +43,10 @@ const App = () => {
     personService.deleteObject(id).then(returnedNote => {
       setPersons(persons.filter(n => n.id !== id))
     })
+    setErrorMessage(`${name} was deleted`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 2000)
   }
   
   useEffect(()=> {
@@ -75,6 +79,10 @@ const App = () => {
         .then(returnedPerson => {
           setPersons(persons.map(person => person.id !== contact.id ? person : returnedPerson))
         })
+        setErrorMessage(`Changed ${newName}'s phonenumber`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 2000)
       }
     } else {
       personService
@@ -91,7 +99,7 @@ const App = () => {
           }, 2000)
         })
         .catch(error => {
-          setErrorMessage(`Added ${newName}`)
+          setErrorMessage(`${newName} was not added`)
           setTimeout(() => {
             setErrorMessage(null)
           }, 2000)
