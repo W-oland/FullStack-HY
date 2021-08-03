@@ -36,7 +36,8 @@ app.get('/info', (req, res) => {
   ? Math.max(...persons.map(person => person.id))
   : 0
 
-  res.send(`<p>Phonebook has info for ${max} people</p>
+
+  res.send(`<p>Phonebook has info for ${max} people</p> // <-- max funktion olisi voinut korvata ${people.length}
             <p>${new Date()}</p>`
   )
 })
