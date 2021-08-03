@@ -61,7 +61,8 @@ app.delete('/api/persons/:id', (request, response) => {
 
 app.post('/api/persons', (req, res) => {
   const person = req.body
-  console.log(person)
+  person.id = Math.random()
+  persons = persons.concat(person)
   res.json(person)
 })
 
